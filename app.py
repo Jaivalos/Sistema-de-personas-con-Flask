@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from flaskext.mysql import MySQL
 from flask import send_from_directory
 
@@ -7,6 +7,7 @@ from datetime import datetime
 import os
 
 app = Flask(__name__)
+app.secret_key = "Develoteca"
 
 #Realizamos la conexion a base de datos con FLask.
 mysql = MySQL()
@@ -113,6 +114,10 @@ def storage():
     _nombre = request.form['txtNombre']
     _correo = request.form['txtCorreo']
     _foto = request.files['txtFoto']
+
+    if _nombre == "" or _correo == '' or _foto == '':
+        flash('Recuerda llenar los datos de los campos')
+        return redirect(url_for('create'))
 
     #Guardamos la fotografia con el tiempo y el nombre de la foto, con el fin de no sobreescribir
     now = datetime.now()
