@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <title>Inicio</title>
-</head>
-<body>
-    
+
+    {% include 'header.html' %}
+
+    <br/><br/>
+    <a href="{{url_for('create')}}" class="btn btn-success">
+        Ingresar nuevo empleado
+    </a>
+
+    <br/>
+
     <table class="table table-light">
         <thead class="thead-light">
             <tr>
@@ -24,16 +24,15 @@
                 <td>{{empleado[0]}}</td>
                 <td>{{empleado[1]}}</td>
                 <td>{{empleado[2]}}</td>
-                <td>{{empleado[3]}}</td>
+                <td> <img class="img-thubnail" width="100" src="uploads/{{empleado[3]}}" alt=""> </td>
                 <td>
-                    <a href="/edit/{{empleado[0]}}">Editar</a>
+                    <a class="btn btn-warning" href="/edit/{{empleado[0]}}">Editar</a>
                     | 
-                    <a href="/destroy/{{empleado[0]}}">Borrar</a>
+                    <a onclick="return confirm('¿Desea borrar el registro?')" class="btn btn-danger" href="/destroy/{{empleado[0]}}">Borrar</a>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
-</body>
-</html>
+{% include 'footer.html' %}

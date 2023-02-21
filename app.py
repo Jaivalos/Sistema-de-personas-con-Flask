@@ -1,6 +1,8 @@
 from flask import Flask
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, url_for
 from flaskext.mysql import MySQL
+from flask import send_from_directory
+
 from datetime import datetime
 import os
 
@@ -17,6 +19,10 @@ mysql.init_app(app)
 #Obtenemos la ruta de la carpeta de las imagenes
 CARPETA = os.path.join('uploads')
 app.config['CARPETA'] = CARPETA
+
+@app.route('/uploads/<nombre_foto>')
+def uploads(nombre_foto):
+    return send_from_directory(app.config['CARPETA'], nombre_foto)
 
 #Indicamos el inicio de la aplicacion en el index.html
 @app.route('/')
@@ -122,7 +128,7 @@ def storage():
     cursor = conn.cursor()
     cursor.execute(sql, datos)
     conn.commit()
-    return render_template('empleados/index.html')
+    return redirect('/')
 
 
 if __name__ == '__main__':
